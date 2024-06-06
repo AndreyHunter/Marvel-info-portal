@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Loader from '../CustomLoader/CustomLoader';
 import CharListItem from '../charListItem/CharListItem';
 
@@ -7,7 +9,7 @@ const CharList = ({
 	charList,
 	selectedChar,
 	handleSelectChar,
-	handleGetMoreCharList,
+	loadCharacters,
 	loading,
 	offset,
 }) => {
@@ -19,23 +21,34 @@ const CharList = ({
 						key={char.id}
 						src={char.image}
 						name={char.name}
-						selectedChar={selectedChar === char.id}
+						isSelectedChar={selectedChar === char.id}
 						handleSelectChar={() => handleSelectChar(char.id)}
 					/>
 				))}
 			</ul>
 			<div className="more">
-				<div>{loading ? <Loader /> : null}</div>
-				<button
-					className="button button__main button__long"
-					onClick={handleGetMoreCharList}
-					disabled={loading ? true : offset >= 1559 ? true : false}
-				>
-					<div className="inner">load more</div>
-				</button>
+				<div>{loading && <Loader />}</div>
+				{offset >= 1559 ? null : (
+					<button
+						className="button button__main button__long"
+						onClick={loadCharacters}
+						disabled={loading ? true : false}
+					>
+						<div className="inner">load more</div>
+					</button>
+				)}
 			</div>
 		</div>
 	);
+};
+
+CharList.propTypes = {
+	charList: PropTypes.array,
+	loadCharacters: PropTypes.func,
+	loading: PropTypes.bool,
+	offset: PropTypes.number,
+	selectedChar: PropTypes.number,
+	handleSelectChar: PropTypes.func,
 };
 
 export default CharList;

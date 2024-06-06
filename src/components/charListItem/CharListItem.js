@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import './CharListItem.scss';
 
 export const isImageNotFound = (src) => {
@@ -10,15 +12,31 @@ export const isImageNotFound = (src) => {
 	return image;
 };
 
-const CharListItem = ({ src, name, selectedChar, handleSelectChar }) => {
-	const clazz = `char-item ${selectedChar ? 'char-item_selected' : ''}`;
+const CharListItem = ({ src, name, isSelectedChar, handleSelectChar }) => {
+	const clazz = `char-item ${isSelectedChar ? 'char-item_selected' : ''}`;
 
 	return (
-		<li className={clazz} onClick={handleSelectChar}>
-			<img src={src} alt={name} style={isImageNotFound(src)}/>
+		<li
+			tabIndex={0}
+			className={clazz}
+			onClick={handleSelectChar}
+			onKeyDown={(e) => {
+				if (e.key === 'Enter') {
+					handleSelectChar();
+				}
+			}}
+		>
+			<img src={src} alt={name} style={isImageNotFound(src)} />
 			<div className="char-item__name">{name}</div>
 		</li>
 	);
+};
+
+CharListItem.propTypes = {
+	src: PropTypes.string,
+	name: PropTypes.string,
+	selectedChar: PropTypes.bool,
+	handleSelectChar: PropTypes.func,
 };
 
 export default CharListItem;

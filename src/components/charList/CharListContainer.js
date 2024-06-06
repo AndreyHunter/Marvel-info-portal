@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import MarvelService from '../../services/MarvelService';
 
 import Loader from '../CustomLoader/CustomLoader';
@@ -16,33 +18,22 @@ class CharListContainer extends Component {
 	};
 
 	componentDidMount() {
-		this.handleGetCharList();
+		this.setState({ loading: true });
+		this.loadCharacters(this.state.offset);
 	}
 
-	handleGetCharList = async () => {
-		this.setState({ loading: true });
-		try {
-			const charList = await MarvelService.getAllCharacters(this.state.offset);
-			this.setState({
-				charList,
-				loading: false,
-			});
-		} catch (err) {
-			this.setState({ error: true, loading: false });
-		}
-	};
-
-	handleGetMoreCharList = async () => {
+	loadCharacters = async (newOffset) => {
 		this.setState({ moreItemsLoading: true });
 		try {
-			const chars = await MarvelService.getAllCharacters(this.state.offset + 9);
-			this.setState(({ charList, offset }) => ({
+			const chars = await MarvelService.getAllCharacters(newOffset);
+			this.setState(({ charList }) => ({
 				charList: [...charList, ...chars],
+				offset: newOffset,
+				loading: false,
 				moreItemsLoading: false,
-				offset: offset + 9,
 			}));
 		} catch (err) {
-			this.setState({ error: true, moreItemsLoading: false });
+			this.setState({ error: true, loading: false, moreItemsLoading: false });
 		}
 	};
 
@@ -63,12 +54,17 @@ class CharListContainer extends Component {
 				charList={charList}
 				selectedChar={selectedChar}
 				handleSelectChar={handleSelectChar}
-				handleGetMoreCharList={this.handleGetMoreCharList}
+				loadCharacters={() => this.loadCharacters(offset + 9)}
 				loading={moreItemsLoading}
 				offset={offset}
 			/>
 		);
 	}
 }
+
+CharListContainer.propTypes = {
+	handleSelectChar: PropTypes.func,
+	selectedChar: PropTypes.number,
+};
 
 export default CharListContainer;

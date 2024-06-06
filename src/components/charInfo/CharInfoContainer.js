@@ -50,7 +50,9 @@ class CharInfoContainer extends Component {
 		const { charInfo, loading, error } = this.state;
 		const { selectedChar } = this.props;
 
-		return <CharInfo selectedChar={selectedChar} {...charInfo} loading={loading} error={error} />;
+		return (
+			<CharInfo selectedChar={selectedChar} {...charInfo} loading={loading} error={error} />
+		);
 	}
 }
 
