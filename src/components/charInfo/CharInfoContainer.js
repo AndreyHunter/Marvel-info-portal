@@ -1,59 +1,35 @@
-import { Component } from 'react';
+import { useEffect, useState } from "react";
 
-import MarvelService from '../../services/MarvelService';
+import MarvelService from "../../services/MarvelService";
 
-import CharInfo from './CharInfo';
+import CharInfo from "./CharInfo";
+import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
-class CharInfoContainer extends Component {
-	state = {
-		charInfo: {},
-		loading: false,
-		error: null,
-	};
+const CharInfoContainer = ({ selectedChar }) => {
+	const [charInfo, setCharInfo] = useState({});
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 
-	componentDidMount() {
-		this.getCharInfo(this.props.selectedChar);
-	}
-
-	componentDidUpdate(prevProps) {
-		const { selectedChar } = this.props;
-		if (selectedChar !== prevProps.selectedChar) {
-			this.getCharInfo(selectedChar);
+	useEffect(() => {
+		if (selectedChar) {
+			getCharInfo(selectedChar);
 		}
-	}
+	}, [selectedChar]);
 
-	getCharInfo = async (id) => {
-		if (!id) return;
-
-		this.setState((state) => ({
-			...state,
-			loading: true,
-		}));
+	const getCharInfo = async (id) => {
+		setLoading(true);
 		try {
 			const charInfo = await MarvelService.getCharInfoBiId(id);
-
-			this.setState((state) => ({
-				...state,
-				charInfo,
-				loading: false,
-			}));
+			setCharInfo(charInfo);
+			setLoading(false);
 		} catch (err) {
-			this.setState((state) => ({
-				...state,
-				loading: false,
-				error: true,
-			}));
+			console.log(err);
+			setError(true);
+			setLoading(false);
 		}
 	};
 
-	render() {
-		const { charInfo, loading, error } = this.state;
-		const { selectedChar } = this.props;
-
-		return (
-			<CharInfo selectedChar={selectedChar} {...charInfo} loading={loading} error={error} />
-		);
-	}
-}
+	return <CharInfo {...charInfo} selectedChar={selectedChar} loading={loading} error={error} />;
+};
 
 export default CharInfoContainer;

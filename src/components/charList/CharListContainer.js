@@ -1,66 +1,59 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-import MarvelService from '../../services/MarvelService';
+import MarvelService from "../../services/MarvelService";
 
-import Loader from '../CustomLoader/CustomLoader';
-import Error from '../error/Error';
+import Loader from "../CustomLoader/CustomLoader";
+import Error from "../error/Error";
 
-import CharList from './CharList';
+import CharList from "./CharList";
 
-class CharListContainer extends Component {
-	state = {
-		charList: [],
-		loading: false,
-		error: false,
-		moreItemsLoading: false,
-		offset: 120,
-	};
+const CharListContainer = ({ selectedChar, handleSelectChar }) => {
+	const [charList, setCharList] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [moreItemsLoading, setMoreItemsLoading] = useState(false);
+	const [error, setError] = useState(false);
+	const [offset, setOffset] = useState(180);
 
-	componentDidMount() {
-		this.setState({ loading: true });
-		this.loadCharacters(this.state.offset);
-	}
+	useEffect(() => {
+		setLoading(true);
+		loadCharacters(offset);
+	}, []);
 
-	loadCharacters = async (newOffset) => {
-		this.setState({ moreItemsLoading: true });
+	const loadCharacters = async (offset) => {
+		setMoreItemsLoading(true);
 		try {
-			const chars = await MarvelService.getAllCharacters(newOffset);
-			this.setState(({ charList }) => ({
-				charList: [...charList, ...chars],
-				offset: newOffset,
-				loading: false,
-				moreItemsLoading: false,
-			}));
+			const characters = await MarvelService.getAllCharacters(offset);
+			setCharList((prevState) => [...prevState, ...characters]);
+			setLoading(false);
+			setMoreItemsLoading(false);
+			setOffset(offset);
 		} catch (err) {
-			this.setState({ error: true, loading: false, moreItemsLoading: false });
+			console.log(err);
+			setError(true);
+			setLoading(false);
+			setMoreItemsLoading(false);
 		}
 	};
 
-	render() {
-		const { charList, loading, error, moreItemsLoading, offset } = this.state;
-		const { handleSelectChar, selectedChar } = this.props;
-
-		if (loading) {
-			return <Loader />;
-		}
-
-		if (error) {
-			return <Error />;
-		}
-
-		return (
-			<CharList
-				charList={charList}
-				selectedChar={selectedChar}
-				handleSelectChar={handleSelectChar}
-				loadCharacters={() => this.loadCharacters(offset + 9)}
-				loading={moreItemsLoading}
-				offset={offset}
-			/>
-		);
+	if (loading) {
+		return <Loader />;
 	}
-}
+
+	if (error) {
+		return <Error />;
+	}
+
+	return (
+		<CharList
+			charList={charList}
+			selectedChar={selectedChar}
+			handleSelectChar={handleSelectChar}
+			loadCharacters={() => loadCharacters(offset + 9)}
+			loading={moreItemsLoading}
+		/>
+	);
+};
 
 CharListContainer.propTypes = {
 	handleSelectChar: PropTypes.func,

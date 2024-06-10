@@ -1,4 +1,4 @@
-import { BASE_URL, API_KEY } from './constans';
+import { BASE_URL, API_KEY } from './constants';
 
 class MarvelService {
 	getResource = async (url) => {

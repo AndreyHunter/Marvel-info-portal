@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import Skeleton from '../skeleton/Skeleton';
-import Loader from '../CustomLoader/CustomLoader';
-import Error from '../error/Error';
+import Skeleton from "../skeleton/Skeleton";
+import Loader from "../CustomLoader/CustomLoader";
+import Error from "../error/Error";
 
-import { isImageNotFound } from '../charListItem/CharListItem';
+import { isImageNotFound } from "../charListItem/CharListItem";
 
-import './charInfo.scss';
+import "./charInfo.scss";
 
 const CharInfo = ({
 	selectedChar,
@@ -59,7 +59,7 @@ const CharInfo = ({
 										</li>
 									))
 									.slice(0, 10)
-							: 'Comics not found'}
+							: "Comics not found"}
 					</ul>
 				</>
 			)}

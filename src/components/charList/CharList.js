@@ -5,6 +5,8 @@ import CharListItem from '../charListItem/CharListItem';
 
 import './charList.scss';
 
+// import React from 'react'
+
 const CharList = ({
 	charList,
 	selectedChar,
