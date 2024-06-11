@@ -1,11 +1,9 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import Loader from '../CustomLoader/CustomLoader';
-import CharListItem from '../charListItem/CharListItem';
+import Loader from "../CustomLoader/CustomLoader";
+import CharListItem from "../charListItem/CharListItem";
 
-import './charList.scss';
-
-// import React from 'react'
+import "./charList.scss";
 
 const CharList = ({
 	charList,

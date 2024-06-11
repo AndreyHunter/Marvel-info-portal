@@ -1,4 +1,4 @@
-import { BASE_URL, API_KEY } from './constants';
+import { BASE_URL, API_KEY } from "./constants";
 
 class MarvelService {
 	getResource = async (url) => {
@@ -17,7 +17,7 @@ class MarvelService {
 
 	getAllCharacters = async (offset) => {
 		const res = await this.getResource(
-			`${BASE_URL}/characters?offset=${offset}&limit=9&${API_KEY}`,
+			`${BASE_URL}/characters?offset=${offset}&limit=9&${API_KEY}`
 		);
 		return res.data.results.map(this._transformCharData);
 	};
@@ -36,7 +36,7 @@ class MarvelService {
 		const randomOffsetIndex = Math.floor(Math.random() * 1565);
 
 		const randomCharacterData = await this.getResource(
-			`${BASE_URL}/characters?offset=${randomOffsetIndex}&limit=1&${API_KEY}`,
+			`${BASE_URL}/characters?offset=${randomOffsetIndex}&limit=1&${API_KEY}`
 		);
 
 		return this._transformCharData(randomCharacterData.data.results[0]);
@@ -77,22 +77,3 @@ class MarvelService {
 }
 
 export default new MarvelService();
-
-// postData = async (url, body) => {
-// 	try {
-// 		const res = await fetch(url, {
-// 			method: 'POST',
-// 			body,
-// 		});
-
-// 		if (!res.ok) {
-// 			throw new Error(
-// 				`Could not fetch ${url}, status: ${res.status}`,
-// 			);
-// 		}
-
-// 		return await res.json();
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// };
