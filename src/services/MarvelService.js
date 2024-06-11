@@ -42,12 +42,6 @@ class MarvelService {
 		return this._transformCharData(randomCharacterData.data.results[0]);
 	};
 
-	// getRandomById = async () => {
-	// 	const randomId = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-	// 	const res = await this.getBiId(randomId);
-	// 	return res.data.results[0];
-	// };
-
 	_transformCharInfoData = (char) => {
 		const defaultData = this._transformCharData(char);
 		const {

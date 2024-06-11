@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import MarvelService from "../../services/MarvelService";
+import { useMarvelService } from "../../services/useMarvelService";
 
 import Loader from "../CustomLoader/CustomLoader";
 import Error from "../error/Error";
@@ -10,9 +10,9 @@ import CharList from "./CharList";
 
 const CharListContainer = ({ selectedChar, handleSelectChar }) => {
 	const [charList, setCharList] = useState([]);
+	const { getAllCharacters, error } = useMarvelService();
 	const [loading, setLoading] = useState(false);
 	const [moreItemsLoading, setMoreItemsLoading] = useState(false);
-	const [error, setError] = useState(false);
 	const [offset, setOffset] = useState(180);
 
 	useEffect(() => {
@@ -23,16 +23,15 @@ const CharListContainer = ({ selectedChar, handleSelectChar }) => {
 	const loadCharacters = async (offset) => {
 		setMoreItemsLoading(true);
 		try {
-			const characters = await MarvelService.getAllCharacters(offset);
+			const characters = await getAllCharacters(offset);
 			setCharList((prevState) => [...prevState, ...characters]);
-			setLoading(false);
 			setMoreItemsLoading(false);
+			setLoading(false);
 			setOffset(offset);
 		} catch (err) {
 			console.log(err);
-			setError(true);
-			setLoading(false);
 			setMoreItemsLoading(false);
+			setLoading(false);
 		}
 	};
 

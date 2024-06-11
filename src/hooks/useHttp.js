@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
-const useHttp = (InitialUrl, initialState = null) => {
-	const [data, setData] = useState(initialState);
+const useHttp = (InitialUrl) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const abortControllerRef = useRef(null);
@@ -30,7 +29,8 @@ const useHttp = (InitialUrl, initialState = null) => {
 
 				const data = await res.json();
 
-				handleSuccess(data);
+				setLoading(false);
+				return data;
 			} catch (err) {
 				setError(err.message);
 				setLoading(false);
@@ -38,11 +38,6 @@ const useHttp = (InitialUrl, initialState = null) => {
 		},
 		[InitialUrl]
 	);
-
-	const handleSuccess = (data) => {
-		setData(data);
-		setLoading(false);
-	};
 
 	const clearError = useCallback(() => setError(null), [setError]);
 
@@ -55,7 +50,6 @@ const useHttp = (InitialUrl, initialState = null) => {
 	}, []);
 
 	return {
-		data,
 		request,
 		error,
 		clearError,

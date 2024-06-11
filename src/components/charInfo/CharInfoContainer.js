@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 
-import MarvelService from "../../services/MarvelService";
+import { useMarvelService } from "../../services/useMarvelService";
 
 import CharInfo from "./CharInfo";
-import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 const CharInfoContainer = ({ selectedChar }) => {
 	const [charInfo, setCharInfo] = useState({});
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
+	const { getCharInfoBiId, loading, error } = useMarvelService();
 
 	useEffect(() => {
 		if (selectedChar) {
@@ -17,16 +15,8 @@ const CharInfoContainer = ({ selectedChar }) => {
 	}, [selectedChar]);
 
 	const getCharInfo = async (id) => {
-		setLoading(true);
-		try {
-			const charInfo = await MarvelService.getCharInfoBiId(id);
-			setCharInfo(charInfo);
-			setLoading(false);
-		} catch (err) {
-			console.log(err);
-			setError(true);
-			setLoading(false);
-		}
+		const charInfo = await getCharInfoBiId(id);
+		setCharInfo(charInfo);
 	};
 
 	return <CharInfo {...charInfo} selectedChar={selectedChar} loading={loading} error={error} />;
