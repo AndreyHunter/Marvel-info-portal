@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink } from "react-router-dom";
 
 import "./appHeader.scss";
 
@@ -13,7 +13,7 @@ const AppHeader = () => {
 			<nav className="app__menu">
 				<ul>
 					<li>
-						<NavLink exact to="/" className="header-link">
+						<NavLink to="/" className="header-link">
 							Characters
 						</NavLink>
 					</li>

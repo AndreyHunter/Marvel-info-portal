@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import { Route, Routes } from "react-router-dom";
 
 import AppHeader from "../components/appHeader/AppHeader";
 
@@ -9,10 +9,10 @@ const App = () => {
 		<div className="app">
 			<AppHeader />
 			<main>
-				<Switch>
-					<Route exact path="/" component={CharactersPage} />
-					<Route path="/comics" component={ComicsPage} />
-				</Switch>
+				<Routes>
+					<Route index path="/" element={<CharactersPage />} />
+					<Route path="/comics" element={<ComicsPage />} />
+				</Routes>
 			</main>
 		</div>
 	);
