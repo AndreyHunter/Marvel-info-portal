@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import Loader from "../CustomLoader/CustomLoader";
+import Loader from "../../ui/customLoader/CustomLoader";
 import CharListItem from "../charListItem/CharListItem";
 
 import "./charList.scss";
@@ -14,8 +14,8 @@ const CharList = ({
 	offset,
 }) => {
 	return (
-		<div className="char__list">
-			<ul className="char__grid">
+		<div className="char-list">
+			<ul className="char-list__content">
 				{charList.map((char) => (
 					<CharListItem
 						key={char.id}

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
 import Skeleton from "../skeleton/Skeleton";
-import Loader from "../CustomLoader/CustomLoader";
-import Error from "../error/Error";
+import Loader from "../../ui/customLoader/CustomLoader";
+import Error from "../../ui/error/Error";
 
 import { isImageNotFound } from "../charListItem/CharListItem";
 

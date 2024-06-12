@@ -1,9 +1,9 @@
-import { StringUtils } from '../../../utils/index';
+import { StringUtils } from "../../../utils/index";
 
-import Error from '../../error/Error';
-import Loader from '../../CustomLoader/CustomLoader';
+import Error from "../../../ui/error/Error";
+import Loader from "../../../ui/customLoader/CustomLoader";
 
-import './randomCharInfo.scss';
+import "./randomCharInfo.scss";
 
 const RandomCharInfo = ({ name, description, image, homePage, wiki, loading, error }) => {
 	return (

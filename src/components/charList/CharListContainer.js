@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import { useMarvelService } from "../../services/useMarvelService";
 
-import Loader from "../CustomLoader/CustomLoader";
-import Error from "../error/Error";
+import Loader from "../../ui/customLoader/CustomLoader";
+import Error from "../../ui/error/Error";
 
 import CharList from "./CharList";
 

@@ -1,6 +1,6 @@
-import { Component } from 'react';
+import { Component } from "react";
 
-import Error from '../error/Error';
+import Error from "../../ui/error/Error";
 
 class ErrorBoundary extends Component {
 	state = {
@@ -21,4 +21,3 @@ class ErrorBoundary extends Component {
 }
 
 export default ErrorBoundary;
-

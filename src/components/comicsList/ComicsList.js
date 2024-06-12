@@ -1,4 +1,4 @@
-import Loader from "../CustomLoader/CustomLoader";
+import Loader from "../../ui/customLoader/CustomLoader";
 import "./comicsList.scss";
 
 const ComicsList = ({ comicsList, offset, loading, handleGetComics }) => {

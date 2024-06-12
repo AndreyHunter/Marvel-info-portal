@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useMarvelService } from "../../services/useMarvelService";
 
-import Loader from "../../components/CustomLoader/CustomLoader";
-import Error from "../../components/error/Error";
+import Loader from "../../ui/customLoader/CustomLoader";
+import Error from "../../ui/error/Error";
 import ComicsList from "./ComicsList";
 
 const ComicsListContainer = () => {
@@ -42,8 +42,6 @@ const ComicsListContainer = () => {
 	if (error) {
 		return <Error />;
 	}
-	
-	console.log(comicsList)
 
 	return (
 		<ComicsList
