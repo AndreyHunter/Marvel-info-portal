@@ -1,10 +1,6 @@
 import { useState } from "react";
 
-import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
-
-import RandomChar from "../../components/randomChar/RandomCharContainer";
-import CharList from "../../components/charList/CharListContainer";
-import CharInfo from "../../components/charInfo/CharInfoContainer";
+import { CharList, CharInfo, RandomChar, ErrorBoundary } from "../../components";
 
 import decoration from "../../resources/img/vision.png";
 

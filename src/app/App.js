@@ -2,8 +2,7 @@ import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 
 import AppHeader from "../components/appHeader/AppHeader";
 
-import CharactersPage from "../pages/CharactersPage/CharactersPage";
-import ComicsPage from "../pages/ComicsPage/ComicsPage";
+import { CharactersPage, ComicsPage } from "../pages";
 
 const App = () => {
 	return (
@@ -12,8 +11,7 @@ const App = () => {
 			<main>
 				<Switch>
 					<Route exact path="/" component={CharactersPage} />
-					<Route exact path="/characters" component={CharactersPage} />
-					<Route exact path="/comics" component={ComicsPage} />
+					<Route path="/comics" component={ComicsPage} />
 				</Switch>
 			</main>
 		</div>
