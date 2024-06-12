@@ -1,4 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import md5 from "crypto-js/md5";
+
+import { API_KEY, PRIVATE_KEY } from "../services/constants";
 
 const useHttp = (InitialUrl) => {
 	const [loading, setLoading] = useState(false);
@@ -12,16 +15,20 @@ const useHttp = (InitialUrl) => {
 			headers = { "Content-type": "application/json" },
 		}) => {
 			setLoading(true);
+
+			const ts = new Date().getTime();
+			const hash = md5(ts + PRIVATE_KEY + API_KEY).toString();
+
+			const separator = url.includes("?") ? "&" : "?";
+			const fullUrl = `${InitialUrl}${url}${separator}ts=${ts}&apikey=${API_KEY}&hash=${hash}`;
+
 			try {
-				const res = await fetch(
-					InitialUrl && !url ? InitialUrl : InitialUrl && url ? InitialUrl + url : url,
-					{
-						method,
-						body,
-						headers,
-						signal: abortControllerRef.current.signal,
-					}
-				);
+				const res = await fetch(fullUrl, {
+					method,
+					body,
+					headers,
+					signal: abortControllerRef.current.signal,
+				});
 
 				if (!res.ok) {
 					throw new Error("Failed to fetch");

@@ -1,31 +1,37 @@
-import { BASE_URL, API_KEY } from "./constants";
+import { BASE_URL } from "./constants";
 import { useHttp } from "../hooks/useHttp";
 
 const useMarvelService = () => {
-	const { request, loading, error } = useHttp(BASE_URL);
+	const { request, loading, error, clearError } = useHttp(BASE_URL);
+
+	// Characters
 
 	const getAllCharacters = async (offset) => {
+		clearError();
 		const res = await request({
-			url: `/characters?offset=${offset}&limit=9&${API_KEY}`,
+			url: `/characters?offset=${offset}&limit=9`,
 		});
 		return res.data.results.map(_transformCharData);
 	};
 
 	const getBiId = async (id) => {
-		const res = await request({ url: `${BASE_URL}/characters/${id}?${API_KEY}` });
+		clearError();
+		const res = await request({ url: `/characters/${id}` });
 		return _transformCharData(res.data.results[0]);
 	};
 
 	const getCharInfoBiId = async (id) => {
-		const res = await request({ url: `/characters/${id}?${API_KEY}` });
+		clearError();
+		const res = await request({ url: `/characters/${id}` });
 		return _transformCharInfoData(res.data.results[0]);
 	};
 
 	const getRandomCharacter = async () => {
+		clearError();
 		const randomOffsetIndex = Math.floor(Math.random() * 1565);
 
 		const randomCharacterData = await request({
-			url: `/characters?offset=${randomOffsetIndex}&limit=1&${API_KEY}`,
+			url: `/characters?offset=${randomOffsetIndex}&limit=1`,
 		});
 
 		return _transformCharData(randomCharacterData.data.results[0]);
@@ -58,6 +64,28 @@ const useMarvelService = () => {
 		};
 	};
 
+	// comics
+
+	const getAllComics = async (offset) => {
+		clearError();
+		const res = await request({ url: `/comics?offset=${offset}&limit=8` });
+		return res.data.results.map(_transformComicsData);
+	};
+
+	const _transformComicsData = (comics) => {
+		const { id, title, thumbnail, urls, prices } = comics;
+		const image = `${thumbnail.path}.${thumbnail.extension}`;
+		const price = prices[0] || prices[1];
+
+		return {
+			id,
+			title,
+			price,
+			image,
+			url: urls[0]?.url,
+		};
+	};
+
 	return {
 		getAllCharacters,
 		getBiId,
@@ -65,6 +93,7 @@ const useMarvelService = () => {
 		getRandomCharacter,
 		loading,
 		error,
+		getAllComics,
 	};
 };
 
