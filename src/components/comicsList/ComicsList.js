@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Loader from "../../ui/customLoader/CustomLoader";
 import "./comicsList.scss";
 
@@ -8,7 +9,7 @@ const ComicsList = ({ comicsList, offset, loading, handleGetComics }) => {
 				{comicsList.length &&
 					comicsList.map((comic, index) => (
 						<li key={index} className="comics__item">
-							<a href={comic.url} target="blank">
+							<Link to={`/comics/${comic.id}`} target="blank">
 								<img
 									src={comic.image}
 									alt={comic.title}
@@ -18,14 +19,14 @@ const ComicsList = ({ comicsList, offset, loading, handleGetComics }) => {
 								<div className="comics__item-price">
 									{comic.price.price ? `${comic.price.price}$` : "NOT-AVAILABLE"}
 								</div>
-							</a>
+							</Link>
 						</li>
 					))}
 			</ul>
 
 			<div className="more">
 				<div>{loading && <Loader />}</div>
-				{offset >= 138 ? null : (
+				{offset >= 60591 ? null : (
 					<button
 						className="button button__main button__long"
 						onClick={handleGetComics}

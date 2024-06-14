@@ -10,7 +10,7 @@ const ComicsListContainer = () => {
 	const { getAllComics, error } = useMarvelService();
 	const [loading, setLoading] = useState(false);
 	const [moreItemsLoading, setMoreItemsLoading] = useState(false);
-	const [offset, setOffset] = useState(100);
+	const [offset, setOffset] = useState(120);
 
 	useEffect(() => {
 		getComics(offset, true);

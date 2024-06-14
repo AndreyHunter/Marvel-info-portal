@@ -72,8 +72,14 @@ const useMarvelService = () => {
 		return res.data.results.map(_transformComicsData);
 	};
 
+	const getOneComic = async (id) => {
+		clearError();
+		const res = await request({ url: `/comics/${id}` });
+		return _transformSingleComicData(res.data.results[0]);
+	};
+
 	const _transformComicsData = (comics) => {
-		const { id, title, thumbnail, urls, prices } = comics;
+		const { id, title, thumbnail, prices } = comics;
 		const image = `${thumbnail.path}.${thumbnail.extension}`;
 		const price = prices[0] || prices[1];
 
@@ -82,7 +88,23 @@ const useMarvelService = () => {
 			title,
 			price,
 			image,
-			url: urls[0]?.url,
+			// url: urls[0]?.url,
+		};
+	};
+
+	const _transformSingleComicData = (comics) => {
+		const { id, title, thumbnail, prices, description, pageCount, textObjects } = comics;
+		const image = `${thumbnail.path}.${thumbnail.extension}`;
+		const price = prices[0] || prices[1];
+
+		return {
+			id,
+			title,
+			description,
+			price,
+			image,
+			pages: pageCount,
+			language: textObjects[0]?.language,
 		};
 	};
 
@@ -94,6 +116,7 @@ const useMarvelService = () => {
 		loading,
 		error,
 		getAllComics,
+		getOneComic,
 	};
 };
 
