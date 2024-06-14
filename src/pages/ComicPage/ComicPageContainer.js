@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useMarvelService } from "../../services/useMarvelService";
 
@@ -10,6 +10,7 @@ import ComicPage from "./ComicPage";
 const ComicPageContainer = () => {
 	const [comic, setComic] = useState({});
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const { getOneComic, loading, error } = useMarvelService();
 
 	useEffect(() => {
@@ -24,6 +25,7 @@ const ComicPageContainer = () => {
 	}
 
 	if (error) {
+		navigate("/404");
 		return <Error />;
 	}
 

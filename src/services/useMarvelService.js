@@ -14,7 +14,7 @@ const useMarvelService = () => {
 		return res.data.results.map(_transformCharData);
 	};
 
-	const getBiId = async (id) => {
+	const getOneCharacter = async (id) => {
 		clearError();
 		const res = await request({ url: `/characters/${id}` });
 		return _transformCharData(res.data.results[0]);
@@ -101,7 +101,7 @@ const useMarvelService = () => {
 			id,
 			title,
 			description,
-			price,
+			price: price.price,
 			image,
 			pages: pageCount,
 			language: textObjects[0]?.language,
@@ -110,7 +110,7 @@ const useMarvelService = () => {
 
 	return {
 		getAllCharacters,
-		getBiId,
+		getOneCharacter,
 		getCharInfoBiId,
 		getRandomCharacter,
 		loading,

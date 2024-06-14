@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
 import "./comicPage.scss";
 
 const ComicPage = ({ comic }) => {
@@ -9,13 +12,25 @@ const ComicPage = ({ comic }) => {
 				<p className="single-comic__descr">{comic.description}</p>
 				<p className="single-comic__descr">{comic.pages} pages</p>
 				<p className="single-comic__descr">Language: {comic.language || "en-us"}</p>
-				<div className="single-comic__price">{comic.price?.price}$</div>
+				<div className="single-comic__price">
+					{comic.price ? comic.price + "$" : "not available"}
+				</div>
 			</div>
-			<a href="#" className="single-comic__back">
+			<Link to="/comics" className="single-comic__back">
 				Back to all
-			</a>
+			</Link>
 		</div>
 	);
+};
+
+ComicPage.propTypes = {
+	comic: PropTypes.shape({
+		title: PropTypes.string,
+		description: PropTypes.string,
+		pages: PropTypes.number,
+		language: PropTypes.string,
+		price: PropTypes.number,
+	}),
 };
 
 export default ComicPage;

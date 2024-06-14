@@ -6,9 +6,10 @@ import { API_KEY, PRIVATE_KEY } from "../services/constants";
 const useHttp = (InitialUrl) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const abortControllerRef = useRef(null);
+	// const abortControllerRef = useRef(null);
 
-	const request = useCallback( async ({
+	const request = useCallback(
+		async ({
 			url,
 			method = "GET",
 			body = null,
@@ -27,7 +28,7 @@ const useHttp = (InitialUrl) => {
 					method,
 					body,
 					headers,
-					signal: abortControllerRef.current.signal,
+					// signal: abortControllerRef.current.signal,
 				});
 
 				if (!res.ok) {
@@ -48,13 +49,13 @@ const useHttp = (InitialUrl) => {
 
 	const clearError = useCallback(() => setError(null), [setError]);
 
-	useEffect(() => {
-		abortControllerRef.current = new AbortController();
+	// useEffect(() => {
+	// 	abortControllerRef.current = new AbortController();
 
-		return () => {
-			abortControllerRef?.current.abort();
-		};
-	}, []);
+	// 	return () => {
+	// 		abortControllerRef?.current.abort();
+	// 	};
+	// }, []);
 
 	return {
 		request,
