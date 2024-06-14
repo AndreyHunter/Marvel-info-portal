@@ -1,0 +1,21 @@
+@import "../../style/variables";
+
+.not-found {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
+
+	&__title {
+		font-size: 3rem;
+	}
+
+	&__link {
+		font-size: 1.6rem;
+		transition: 0.1s ease-in-out;
+		&:hover {
+			color: $main-color;
+		}
+	}
+}
